@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "file:../../../../",
-    "graphql": "^15.0.0",
+    "graphql": "^16.0.0",
     "react": "file:../../../../node_modules/react",
     "react-dom": "file:../../../../node_modules/react-dom",
     "react-scripts": "4.0.3"
