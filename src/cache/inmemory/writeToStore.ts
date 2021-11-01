@@ -359,6 +359,7 @@ export class StoreWriter {
     // since we always need keyObject below.
     try {
       const [id, keyObject] = policies.identify(result, {
+        typename,
         selectionSet,
         fragmentMap: context.fragmentMap,
         storeObject: incoming,
