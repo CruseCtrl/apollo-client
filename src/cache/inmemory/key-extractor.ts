@@ -27,6 +27,9 @@ export function keyFieldsFnFromSpecifier(
         let extracted = extractKeyPath(
           context.storeObject,
           schemaKeyPath,
+          // Using context.readField to extract paths from context.storeObject
+          // allows the extraction to see through Reference objects and respect
+          // custom read functions.
           extract,
         );
 
@@ -35,6 +38,15 @@ export function keyFieldsFnFromSpecifier(
           object !== context.storeObject &&
           hasOwn.call(object, schemaKeyPath[0])
         ) {
+          // If context.storeObject fails to provide a value for the requested
+          // path, fall back to the raw result object, if it has a top-level key
+          // matching the first key in the path (schemaKeyPath[0]). This allows
+          // key fields included in the written data to be saved in the cache
+          // even if they are not selected explicitly in context.selectionSet.
+          // Not being mentioned by context.selectionSet is convenient here,
+          // since it means these extra fields cannot be affected by field
+          // aliasing, which is why we can use extractKey instead of
+          // context.readField for this extraction.
           extracted = extractKeyPath(object, schemaKeyPath, extractKey);
         }
 

@@ -242,6 +242,14 @@ export class StoreWriter {
       incoming.__typename = typename;
     }
 
+    // This readField function will be passed as context.readField in the
+    // KeyFieldsContext object created within policies.identify (called below).
+    // In addition to reading from the existing context.store (thanks to the
+    // policies.readField(options, context) line at the very bottom), this
+    // version of readField can read from Reference objects that are currently
+    // pending in context.incomingById, which is important whenever keyFields
+    // need to be extracted from a child object that processSelectionSet has
+    // turned into a Reference.
     const readField: ReadFieldFunction = function (this: void) {
       const options = normalizeReadFieldOptions(
         arguments,
