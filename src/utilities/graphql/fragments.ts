@@ -4,7 +4,9 @@ import {
   DocumentNode,
   FragmentDefinitionNode,
   InlineFragmentNode,
-  SelectionNode
+  SelectionNode,
+  Kind,
+  OperationTypeNode,
 } from 'graphql';
 
 /**
@@ -75,15 +77,16 @@ export function getFragmentQueryDocument(
     ...document,
     definitions: [
       {
-        kind: 'OperationDefinition',
-        operation: 'query',
+        kind: 'OperationDefinition' as Kind.OPERATION_DEFINITION,
+        // OperationTypeNode is an enum
+        operation: 'query' as OperationTypeNode,
         selectionSet: {
-          kind: 'SelectionSet',
+          kind: 'SelectionSet' as Kind.SELECTION_SET,
           selections: [
             {
-              kind: 'FragmentSpread',
+              kind: 'FragmentSpread' as Kind.FRAGMENT_SPREAD,
               name: {
-                kind: 'Name',
+                kind: 'Name' as Kind.NAME,
                 value: actualFragmentName,
               },
             },

@@ -2,6 +2,7 @@ import { invariant } from '../globals';
 
 import {
   DocumentNode,
+  Kind,
   SelectionNode,
   SelectionSetNode,
   OperationDefinitionNode,
@@ -53,9 +54,9 @@ export type RemoveVariableDefinitionConfig = RemoveNodeConfig<
 >;
 
 const TYPENAME_FIELD: FieldNode = {
-  kind: 'Field',
+  kind: 'Field' as Kind.FIELD,
   name: {
-    kind: 'Name',
+    kind: 'Name' as Kind.NAME,
     value: '__typename',
   },
 };

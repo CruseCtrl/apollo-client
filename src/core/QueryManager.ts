@@ -1,6 +1,6 @@
 import { invariant, InvariantError } from '../utilities/globals';
 
-import { DocumentNode } from 'graphql';
+import { DocumentNode, OperationTypeNode } from 'graphql';
 import { equal } from '@wry/equality';
 
 import { ApolloLink, execute, FetchResult } from '../link/core';
@@ -572,7 +572,7 @@ export class QueryManager<TStore> {
           definitions: transformed.definitions.map(def => {
             if (def.kind === "OperationDefinition" &&
                 def.operation !== "query") {
-              return { ...def, operation: "query" };
+              return { ...def, operation: "query" as OperationTypeNode };
             }
             return def;
           }),
